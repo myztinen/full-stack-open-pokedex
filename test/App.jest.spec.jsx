@@ -18,16 +18,16 @@ describe('<App />', () => {
       }
     )
     await act(async () => {
-      render(<Router><App/></Router>)
+      render(<Router><App /></Router>)
     })
-    expect(axiosMock.get).toHaveBeenCalledTimes(1)
+    expect(axiosMock.get).toHaveBeenCalledTimes(2)
     expect(axiosMock.get).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon/?limit=50')
   })
 
   it('shows error', async () => {
     axiosMock.get.mockRejectedValueOnce(new Error())
     await act(async () => {
-      render(<Router><App/></Router>)
+      render(<Router><App /></Router>)
     })
     expect(screen.getByTestId('error')).toBeVisible()
   })
