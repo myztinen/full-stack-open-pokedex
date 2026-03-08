@@ -26,12 +26,14 @@ jobs:
       - name: Run E2E tests
         run: npm run test:e2e
       - name: Build failure message
-        uses: rjstone/discord-webhook-notify@v2
         if: ${{ failure() }}
+        uses: sarisia/actions-status-discord@v1
         with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          severity: error
-          details: Build failed! Commit ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+          status: Failure
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "Build failed!"
+          description: Build failed! Commit ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+          color: '#FF0000'
   deployment_trigger:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-22.04
