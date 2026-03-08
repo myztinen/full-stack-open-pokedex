@@ -20,7 +20,7 @@ describe('<App />', () => {
     await act(async () => {
       render(<Router><App /></Router>)
     })
-    expect(axiosMock.get).toHaveBeenCalledTimes(2)
+    expect(axiosMock.get).toHaveBeenCalledTimes(1)
     expect(axiosMock.get).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon/?limit=50')
   })
 
