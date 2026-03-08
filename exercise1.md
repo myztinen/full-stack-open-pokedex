@@ -7,3 +7,5 @@ For testing in CI, application team uses several testing tools in the pipeline. 
 As the technology stack in the project  is quite standard, team decided to use cloud based CI/CD tools. This will offload some of the responsibility and duties for maintaining the infra and software tools and help the team to concentrate what brings value to the company.
 
 The team is not fond of Jenkins or Github because they are too mainstream technologies. The Company has not made any decisive decisions about where to run software anyways. Therefore the team has researched different options before hand on how to build CI/CD pipeline  for the application. For cloud based solutions, e.g. Amazon and Google Cloud, the team can use the vendor specific CI/CD platforms like Cloud Build in Google Cloud or AWS CodePipeline and CodeBuild. For Cloud agnostic solutions team could use CircleCI.
+
+The End.
