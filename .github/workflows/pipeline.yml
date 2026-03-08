@@ -25,9 +25,34 @@ jobs:
         run: npm run test
       - name: Run E2E tests
         run: npm run test:e2e
+      - name: Build failure message
+        if: ${{ failure() }}
+        uses: sarisia/actions-status-discord@v1
+        with:
+          status: Failure
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "Build failed!"
+          description: Build failed! Commit ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+          color: '#FF0000'
+  deployment_trigger:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-22.04
+    steps:
       - name: Trigger deployment
+        id: deployment
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ','), '#skip') }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+      - name: Deployment success message
+        if: ${{ steps.deployment.conclusion == 'success' }}
+        uses: sarisia/actions-status-discord@v1
+        with:
+          status: Success
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "Deployment Successfull!"
+          nocontext: true
+          description: A new version of infamous Pokedex deployed
+          color: #228B22
+
   tag_release:
     needs: [simple_deployment_pipeline]
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ','), '#skip') }}
